@@ -2,11 +2,11 @@
  * File Name     : main.c
  * Created By    : Svetlana Linuxenko
  * Creation Date : [2019-09-20 23:23]
- * Last Modified : [2019-09-21 21:25]
+ * Last Modified : [2019-09-21 22:05]
  * Description   :  
  **********************************************************************************/
 
-#define DEBUG
+//#define DEBUG
 
 #include <avr/io.h>
 #include <avr/wdt.h>
@@ -102,9 +102,8 @@ int main(void) {
 
   while(1) {
     wdt_reset();
-
     lcd_update();
-    _delay_ms(900);
+    _delay_ms(500);
   }
 
   return 0;
