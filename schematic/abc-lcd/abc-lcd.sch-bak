@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:abc-lcd-cache
 EELAYER 30 0
 EELAYER END
 $Descr A3 16535 11693
@@ -156,7 +157,7 @@ U 1 1 5D875DF4
 P 4000 2050
 F 0 "U2" H 4150 2750 50  0000 C CNN
 F 1 "RC1602A" H 4100 2100 50  0000 C CNN
-F 2 "Display:LCD-016N002L" H 4100 1250 50  0001 C CNN
+F 2 "Display:WC1602A" H 4100 1250 50  0001 C CNN
 F 3 "http://www.raystar-optronics.com/down.php?ProID=18" H 4100 1950 50  0001 C CNN
 	1    4000 2050
 	1    0    0    -1  
@@ -340,7 +341,7 @@ L Connector:Screw_Terminal_01x03 J1
 U 1 1 5D8CEB07
 P 2550 9800
 F 0 "J1" H 2468 9475 50  0000 C CNN
-F 1 "Screw_Terminal_01x03" H 2550 10250 50  0000 C CNN
+F 1 "24v-INPUT" H 2550 10250 50  0000 C CNN
 F 2 "Connector_Phoenix_MC_HighVoltage:PhoenixContact_MCV_1,5_3-G-5.08_1x03_P5.08mm_Vertical" H 2550 9800 50  0001 C CNN
 F 3 "~" H 2550 9800 50  0001 C CNN
 	1    2550 9800
@@ -651,7 +652,7 @@ L Connector:Screw_Terminal_01x03 J3
 U 1 1 5DA0EE7A
 P 12400 7500
 F 0 "J3" H 12318 7175 50  0000 C CNN
-F 1 "Screw_Terminal_01x03" H 12400 7950 50  0000 C CNN
+F 1 "24v_OUTPUT" H 12400 7950 50  0000 C CNN
 F 2 "Connector_Phoenix_MC_HighVoltage:PhoenixContact_MCV_1,5_3-G-5.08_1x03_P5.08mm_Vertical" H 12400 7500 50  0001 C CNN
 F 3 "~" H 12400 7500 50  0001 C CNN
 	1    12400 7500
@@ -769,27 +770,19 @@ Connection ~ 10000 5100
 $Comp
 L Device:R_POT RV1
 U 1 1 5DA5949F
-P 11100 5100
-F 0 "RV1" V 10985 5100 50  0000 C CNN
-F 1 "R_POT" V 10894 5100 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Piher_PC-16_Single_Horizontal" H 11100 5100 50  0001 C CNN
-F 3 "~" H 11100 5100 50  0001 C CNN
-	1    11100 5100
-	0    -1   -1   0   
+P 11250 5350
+F 0 "RV1" V 11135 5350 50  0000 C CNN
+F 1 "R_POT" V 11044 5350 50  0000 C CNN
+F 2 "Potentiometer_THT:Potentiometer_Piher_PC-16_Single_Horizontal" H 11250 5350 50  0001 C CNN
+F 3 "~" H 11250 5350 50  0001 C CNN
+	1    11250 5350
+	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	10550 5100 10950 5100
 Connection ~ 10550 5100
 Wire Wire Line
 	8550 4900 8800 4900
 Wire Wire Line
 	8800 4900 8800 4600
-Wire Wire Line
-	8800 4600 11100 4600
-Wire Wire Line
-	11100 4600 11100 4950
-Wire Wire Line
-	11250 5100 11250 5550
 Wire Wire Line
 	11250 5550 10550 5550
 Connection ~ 8900 5550
@@ -831,7 +824,6 @@ Wire Wire Line
 	12200 5550 12450 5550
 Wire Wire Line
 	11250 5100 11450 5100
-Connection ~ 11250 5100
 Text GLabel 3900 5950 2    50   Input ~ 0
 ADC_ADJ_2
 Text GLabel 3900 6050 2    50   Input ~ 0
@@ -1179,4 +1171,17 @@ Wire Wire Line
 Wire Wire Line
 	10300 2350 10900 2350
 Connection ~ 10300 2050
+Wire Wire Line
+	11250 5200 11250 5100
+Wire Wire Line
+	10550 5100 11250 5100
+Connection ~ 11250 5100
+Wire Wire Line
+	11250 5550 11250 5500
+Wire Wire Line
+	8800 4600 11000 4600
+Wire Wire Line
+	11000 4600 11000 5350
+Wire Wire Line
+	11000 5350 11100 5350
 $EndSCHEMATC
