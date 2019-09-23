@@ -1084,10 +1084,8 @@ F 3 "~" H 8300 9850 50  0001 C CNN
 	1    8300 9650
 	1    0    0    -1  
 $EndComp
-Text GLabel 3700 6750 2    50   Input ~ 0
+Text GLabel 3650 5450 2    50   Input ~ 0
 BTN_SOURCE
-Wire Wire Line
-	3700 6750 3450 6750
 Wire Wire Line
 	7800 9650 8050 9650
 $Comp
@@ -1150,7 +1148,6 @@ NoConn ~ 3450 5050
 NoConn ~ 3450 5150
 NoConn ~ 3450 5250
 NoConn ~ 3450 5350
-NoConn ~ 3450 5450
 NoConn ~ 3450 5550
 NoConn ~ 3450 6450
 NoConn ~ 3450 6550
@@ -1184,4 +1181,7 @@ Wire Wire Line
 Wire Wire Line
 	9800 5850 9650 5850
 Connection ~ 10000 5550
+NoConn ~ 3450 6750
+Wire Wire Line
+	3650 5450 3450 5450
 $EndSCHEMATC

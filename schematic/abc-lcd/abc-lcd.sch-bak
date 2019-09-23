@@ -785,12 +785,8 @@ Wire Wire Line
 	8800 4900 8800 4600
 Wire Wire Line
 	11250 5550 10550 5550
-Connection ~ 8900 5550
 Wire Wire Line
 	10000 5400 10000 5550
-Connection ~ 10000 5550
-Wire Wire Line
-	10000 5550 8900 5550
 Wire Wire Line
 	10550 5400 10550 5550
 Connection ~ 10550 5550
@@ -933,14 +929,8 @@ Text GLabel 8900 6700 2    50   Input ~ 0
 GND_ENB
 Wire Wire Line
 	8900 7000 8900 6700
-Text GLabel 11700 5900 0    50   Input ~ 0
+Text GLabel 9650 5850 0    50   Input ~ 0
 GND_ENB
-Wire Wire Line
-	11750 5550 11900 5550
-Wire Wire Line
-	11750 5550 11750 5900
-Wire Wire Line
-	11750 5900 11700 5900
 Text GLabel 3700 6850 2    50   Input ~ 0
 PWR_ENABLE
 Wire Wire Line
@@ -1184,4 +1174,14 @@ Wire Wire Line
 	11000 4600 11000 5350
 Wire Wire Line
 	11000 5350 11100 5350
+Wire Wire Line
+	11250 5550 11900 5550
+Connection ~ 11250 5550
+Wire Wire Line
+	10000 5550 9800 5550
+Wire Wire Line
+	9800 5550 9800 5850
+Wire Wire Line
+	9800 5850 9650 5850
+Connection ~ 10000 5550
 $EndSCHEMATC
