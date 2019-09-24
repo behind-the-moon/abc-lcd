@@ -2,7 +2,7 @@
  * File Name     : main.c
  * Created By    : Svetlana Linuxenko
  * Creation Date : [2019-09-20 23:23]
- * Last Modified : [2019-09-21 22:05]
+ * Last Modified : [2019-09-25 00:56]
  * Description   :  
  **********************************************************************************/
 
@@ -24,13 +24,14 @@
 #define _BAUD_RATE   9600
 #endif
 
+#define LCD_UPDATE_INTERVAL 300000
+
 const float factor[] = {
   1, // ADC0 factor
   1,
+  11,
   1,
-  1,
-  1,
-  1,
+  11,
   1
 };
 
@@ -83,11 +84,29 @@ void lcd_update(void) {
 #endif
 }
 
+uint8_t pwr_state = 0;
+
+void pwr_toggle() {
+  pwr_state = !pwr_state;
+
+  if (pwr_state == 0) {
+    PORTD &= ~(1 << PD4);
+  } else {
+    PORTD |= (1 << PD4);
+  }
+}
+
 int main(void) {
+  unsigned long lup_count = 0;
+  uint8_t ispwr_pressed = 0;
 
 #ifdef DEBUG
   uart_init(UART_BAUD_SELECT(_BAUD_RATE, F_CPU));
 #endif
+
+  DDRB &= ~(1 << PB4);
+  PORTB = 0xff;
+  DDRD |= (1 << PD4);
 
   /* ADC with updatable callback (awesome stuff) */
   adc_start(ADC_PRESCALER_128, ADC_VREF_AVCC, ADC_PORTS, adc_update);
@@ -102,8 +121,27 @@ int main(void) {
 
   while(1) {
     wdt_reset();
-    lcd_update();
-    _delay_ms(500);
+
+    /* Kinda simpliest debounce */
+    if ((PINB & (1 << PB4)) == 0 && lup_count < 100 && ispwr_pressed == 0) {
+      ispwr_pressed = 1;
+      pwr_toggle();
+    }
+
+    if (lup_count >= LCD_UPDATE_INTERVAL) {
+      lup_count = 0;
+
+      /* Anti monkey protection */
+      if (ispwr_pressed > 0 && ispwr_pressed < 8) {
+        ispwr_pressed++;
+      } else {
+        ispwr_pressed = 0;
+      }
+
+      lcd_update();
+    }
+
+    lup_count++;
   }
 
   return 0;
