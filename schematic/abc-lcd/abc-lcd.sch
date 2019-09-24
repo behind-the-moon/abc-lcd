@@ -80,17 +80,6 @@ Wire Wire Line
 	3200 2400 3200 1750
 Wire Wire Line
 	3200 1750 3600 1750
-$Comp
-L power:GND #PWR02
-U 1 1 5D87F814
-P 4000 2950
-F 0 "#PWR02" H 4000 2700 50  0001 C CNN
-F 1 "GND" H 4005 2777 50  0000 C CNN
-F 2 "" H 4000 2950 50  0001 C CNN
-F 3 "" H 4000 2950 50  0001 C CNN
-	1    4000 2950
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4000 2750 4000 2850
 Wire Wire Line
@@ -100,8 +89,6 @@ Wire Wire Line
 Wire Wire Line
 	3400 2850 4000 2850
 Connection ~ 4000 2850
-Wire Wire Line
-	4000 2850 4000 2950
 Wire Wire Line
 	4400 2250 4550 2250
 Wire Wire Line
@@ -361,17 +348,6 @@ Text Notes 1450 10800 0    50   ~ 0
 Power input terminal\n
 Wire Wire Line
 	3100 2300 3100 1550
-$Comp
-L power:GND #PWR0103
-U 1 1 5D8DF44E
-P 1750 1250
-F 0 "#PWR0103" H 1750 1000 50  0001 C CNN
-F 1 "GND" H 1755 1077 50  0000 C CNN
-F 2 "" H 1750 1250 50  0001 C CNN
-F 3 "" H 1750 1250 50  0001 C CNN
-	1    1750 1250
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	2300 1450 2300 1400
 Wire Wire Line
@@ -1184,4 +1160,12 @@ Connection ~ 10000 5550
 NoConn ~ 3450 6750
 Wire Wire Line
 	3650 5450 3450 5450
+Text GLabel 3950 3150 0    50   Input ~ 0
+GND_ENB
+Wire Wire Line
+	3950 3150 4000 3150
+Wire Wire Line
+	4000 2850 4000 3150
+Text GLabel 1750 1250 0    50   Input ~ 0
+GND_ENB
 $EndSCHEMATC
