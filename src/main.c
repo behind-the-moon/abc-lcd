@@ -2,7 +2,7 @@
  * File Name     : main.c
  * Created By    : Svetlana Linuxenko
  * Creation Date : [2019-09-20 23:23]
- * Last Modified : [2019-09-25 00:56]
+ * Last Modified : [2019-09-25 18:31]
  * Description   :  
  **********************************************************************************/
 
@@ -24,19 +24,20 @@
 #define _BAUD_RATE   9600
 #endif
 
-#define LCD_UPDATE_INTERVAL 300000
+#define LCD_UPDATE_INTERVAL 40000
 
 const float factor[] = {
   1, // ADC0 factor
-  1,
+  10,
   11,
-  1,
+  10,
   11,
-  1
+  10
 };
 
 ShiftIC icS;
 ShiftLCD lcd;
+uint8_t pwr_state = 0;
 
 #define ADC_PORTS 6
 uint16_t voltages[ADC_PORTS];
@@ -50,6 +51,9 @@ void lcd_update(void) {
   char values[ADC_PORTS][6];
   uint8_t i = 0;
 
+  if (!pwr_state) {
+    return;
+  }
   // Full refresh
 /*  shiftLCDClear(&lcd);*/
   shiftLCDSetCursor(&lcd, 0, 0);
@@ -84,29 +88,33 @@ void lcd_update(void) {
 #endif
 }
 
-uint8_t pwr_state = 0;
+void lcd_init(void) {
+  createShiftLCD(&lcd, &icS, 4, 5, 0, 1, 2, 3, 16, 2, 0);
+}
+
 
 void pwr_toggle() {
-  pwr_state = !pwr_state;
+  pwr_state ^= 1;
 
   if (pwr_state == 0) {
     PORTD &= ~(1 << PD4);
   } else {
     PORTD |= (1 << PD4);
+    lcd_init();
   }
 }
 
 int main(void) {
   unsigned long lup_count = 0;
-  uint8_t ispwr_pressed = 0;
+  uint8_t pwr_confidence = 0;
 
 #ifdef DEBUG
   uart_init(UART_BAUD_SELECT(_BAUD_RATE, F_CPU));
 #endif
 
-  DDRB &= ~(1 << PB4);
-  PORTB = 0xff;
-  DDRD |= (1 << PD4);
+  DDRB &= ~(1 << PINB4);
+  DDRD |= (1 << PORTD4);
+  PORTD &= ~(1 << PORTD4);
 
   /* ADC with updatable callback (awesome stuff) */
   adc_start(ADC_PRESCALER_128, ADC_VREF_AVCC, ADC_PORTS, adc_update);
@@ -114,7 +122,7 @@ int main(void) {
   /* LCD initalization */
   createShift(&icS, &DDRD, &PORTD, PORTD5, PORTD6, PORTD7);
   icS.type = IC_TYPE_HC164;
-  createShiftLCD(&lcd, &icS, 4, 5, 0, 1, 2, 3, 16, 2, 0);
+  lcd_init();
 
   wdt_enable(WDTO_2S);
   sei();
@@ -123,25 +131,23 @@ int main(void) {
     wdt_reset();
 
     /* Kinda simpliest debounce */
-    if ((PINB & (1 << PB4)) == 0 && lup_count < 100 && ispwr_pressed == 0) {
-      ispwr_pressed = 1;
+    if ((PINB & (1 << PINB4)) == 0 && pwr_confidence == 0) {
+      pwr_confidence = 1;
       pwr_toggle();
     }
 
     if (lup_count >= LCD_UPDATE_INTERVAL) {
-      lup_count = 0;
 
-      /* Anti monkey protection */
-      if (ispwr_pressed > 0 && ispwr_pressed < 8) {
-        ispwr_pressed++;
-      } else {
-        ispwr_pressed = 0;
+      if (pwr_confidence != 0 && (pwr_confidence++) >= 3) {
+        pwr_confidence = 0;
       }
 
+      lup_count = 0;
       lcd_update();
     }
 
     lup_count++;
+    _delay_us(10);
   }
 
   return 0;
