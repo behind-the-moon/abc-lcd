@@ -11,4 +11,5 @@ I don't recommend this project, maybe, someday I make something better.
 The screenshot of schematic for easier access to it
 
 ![boom](https://raw.githubusercontent.com/linuxenko/abc-lcd/dev/schematic/abc-lcd/schemtaic.png)
+![board](https://raw.githubusercontent.com/linuxenko/abc-lcd/dev/schematic/board.png)
 
