@@ -1,2 +1,4 @@
-## abc-lcd
-Adjustable buck converter with lcd using atmega8 and lm2596
+## BOOOM !!!
+
+It worked some time, until I've decided to test shorts....
+I don't recommend this project, maybe, someday I make something better.
